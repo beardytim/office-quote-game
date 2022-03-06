@@ -125,6 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
     //need to remove the answer from the list of names then randomise names, then make new list with 3 of them and add the answer name to that list....
     List<String> names = [];
     names.addAll(nameList);
+    names.remove(quote.character);
     names.shuffle();
     names.removeRange(3, names.length);
     names.add(quote.character);

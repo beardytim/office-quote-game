@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'screens/game.dart';
+import 'package:office_quote_game/screens/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      home: const GameScreen(),
+      home: const HomeScreen(),
     );
   }
 }

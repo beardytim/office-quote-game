@@ -7,7 +7,7 @@ class QuoteFetcher {
     final response = await http.get(
       Uri.parse("https://www.officeapi.dev/api/quotes/random"),
     );
-    print(response.statusCode);
+    // print(response.statusCode);
     if (response.statusCode == 200) {
       //200 = OK
       return Quote.fromJson(jsonDecode(response.body));

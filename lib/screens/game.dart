@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:office_quote_game/screens/score.dart';
+import '../utils/name_service.dart';
 import '/utils/quote_fetcher.dart';
 import '/models/quote.dart';
 
@@ -28,9 +30,10 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   void _endGame() {
-    setState(() {
-      _score = 0;
-    });
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ScoreScreen(score: _score)),
+    );
   }
 
   @override
@@ -57,14 +60,14 @@ class _GameScreenState extends State<GameScreen> {
                     ),
                   ),
                   buttonBar(quote),
-                  Text(
-                    '$_score',
-                    style: Theme.of(context).textTheme.headline4,
-                  ),
+                  // Text(
+                  //   '$_score',
+                  //   style: Theme.of(context).textTheme.headline4,
+                  // ),
                 ],
               );
             } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
+              return Center(child: Text('${snapshot.error}'));
             }
             return const CircularProgressIndicator();
           },
@@ -74,43 +77,7 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   Column buttonBar(Quote quote) {
-    List<String> nameList = [
-      "Michael Scott",
-      "Jim Halpert",
-      "Dwight Schrute",
-      "Pam Beesly",
-      "Ryan Howard",
-      "Kelly Kapoor",
-      "Angela Martin",
-      "Kevin Malone",
-      "Oscar Martinez",
-      "Andy Bernard",
-      "Stanley Hudson",
-      "Phyllis Lapin",
-      "Toby Flenderson",
-      "Erin Hannon",
-      "Gabe Lewis",
-      "Darryl Philbin",
-      "Creed Bratton",
-      "Jo Bennett",
-      "Holly Flax",
-      "Jan Levinson",
-      "Todd Packer",
-      "Charles Minor",
-      "Deangelo Vickers",
-      "Josh Porter",
-      "Ed Truck",
-      "Hunter null",
-      "David Wallace"
-    ];
-    //need to remove the answer from the list of names then randomise names, then make new list with 3 of them and add the answer name to that list....
-    List<String> names = [];
-    names.addAll(nameList);
-    names.remove(quote.character);
-    names.shuffle();
-    names.removeRange(3, names.length);
-    names.add(quote.character);
-    names.shuffle();
+    List<String> names = NameService().fetchNames(quote.character);
     return Column(
       children: [
         for (String name in names) button(name, quote),

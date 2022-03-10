@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:office_quote_game/screens/home.dart';
+import 'package:office_quote_game/screens/home_screen.dart';
 
 void main() {
   runApp(const MyApp());

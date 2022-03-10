@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:office_quote_game/screens/score.dart';
+import 'package:office_quote_game/screens/game_over_screen.dart';
 import '../utils/name_service.dart';
 import '/utils/quote_fetcher.dart';
 import '/models/quote.dart';
@@ -29,10 +29,11 @@ class _GameScreenState extends State<GameScreen> {
     });
   }
 
-  void _endGame() {
+  void _endGame(Quote quote) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ScoreScreen(score: _score)),
+      MaterialPageRoute(
+          builder: (context) => GameOverScreen(score: _score, quote: quote)),
     );
   }
 
@@ -93,7 +94,7 @@ class _GameScreenState extends State<GameScreen> {
           if (name == quote.character) {
             _incrementScore();
           } else {
-            _endGame();
+            _endGame(quote);
           }
         },
         child: SizedBox(

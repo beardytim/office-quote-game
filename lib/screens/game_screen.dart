@@ -5,7 +5,8 @@ import '/utils/quote_fetcher.dart';
 import '/models/quote.dart';
 
 class GameScreen extends StatefulWidget {
-  const GameScreen({Key? key}) : super(key: key);
+  const GameScreen({Key? key, required this.player}) : super(key: key);
+  final String player;
 
   @override
   State<GameScreen> createState() => _GameScreenState();
@@ -33,7 +34,12 @@ class _GameScreenState extends State<GameScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => GameOverScreen(score: _score, quote: quote)),
+        builder: (context) => GameOverScreen(
+          score: _score,
+          quote: quote,
+          player: widget.player,
+        ),
+      ),
     );
   }
 
@@ -49,22 +55,21 @@ class _GameScreenState extends State<GameScreen> {
               return Column(
                 children: <Widget>[
                   Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Center(
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
                         child: Text(
                           quote.quote,
-                          style: Theme.of(context).textTheme.headline3,
+                          style: Theme.of(context).textTheme.headline4,
                           textAlign: TextAlign.center,
                         ),
                       ),
                     ),
                   ),
+                  const Divider(
+                    height: 10.0,
+                  ),
                   buttonBar(quote),
-                  // Text(
-                  //   '$_score',
-                  //   style: Theme.of(context).textTheme.headline4,
-                  // ),
                 ],
               );
             } else if (snapshot.hasError) {
@@ -77,32 +82,53 @@ class _GameScreenState extends State<GameScreen> {
     );
   }
 
-  Column buttonBar(Quote quote) {
+  Widget buttonBar(Quote quote) {
     List<String> names = NameService().fetchNames(quote.character);
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        for (String name in names) button(name, quote),
+        const SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            button(names[0], quote),
+            const SizedBox(width: 10),
+            button(names[1], quote),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            button(names[2], quote),
+            const SizedBox(width: 10),
+            button(names[3], quote),
+          ],
+        ),
+        const SizedBox(height: 10),
       ],
     );
   }
 
-  Padding button(String name, Quote quote) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: OutlinedButton(
-        onPressed: () {
-          if (name == quote.character) {
-            _incrementScore();
-          } else {
-            _endGame(quote);
-          }
-        },
-        child: SizedBox(
-          height: 30,
-          width: 150,
-          child: Center(
-              child: name == "Hunter null" ? const Text('Hunter') : Text(name)),
-        ),
+  Widget button(String name, Quote quote) {
+    return OutlinedButton(
+      onPressed: () {
+        if (name == quote.character) {
+          _incrementScore();
+        } else {
+          _endGame(quote);
+        }
+      },
+      child: SizedBox(
+        height: 50,
+        width: 100,
+        child: Center(
+            child: name == "Hunter null"
+                ? const Text('Hunter')
+                : Text(
+                    name,
+                    textAlign: TextAlign.center,
+                  )),
       ),
     );
   }

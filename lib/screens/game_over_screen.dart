@@ -31,20 +31,24 @@ class _GameOverScreenState extends State<GameOverScreen> {
   void logScore() async {
     //UserCredential user = await FirebaseAuth.instance.signInAnonymously();
     String user = FirebaseAuth.instance.currentUser!.uid;
-
-    int score = await FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection('highscores')
         .doc(user)
-        .get()
-        .then((snapshot) {
-      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
-      return data['score'];
-    });
+        .set({'name': widget.player});
 
-    await FirebaseFirestore.instance.collection('highscores').doc(user).set({
-      'score': score < widget.score ? widget.score : score,
-      'name': widget.player
-    });
+    // Future<int> score = await FirebaseFirestore.instance
+    //     .collection('highscores')
+    //     .doc(user)
+    //     .get()
+    //     .then((snapshot) {
+    //   Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+    //   return data['score'];
+    // });
+
+    FirebaseFirestore.instance
+        .collection('highscores')
+        .doc()
+        .set({'score': widget.score, 'name': widget.player});
   }
 
   @override

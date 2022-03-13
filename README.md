@@ -1,6 +1,6 @@
 # The Office Quote Game!
 
-Simple who said it game for The American Office!
+Simple who said it game for The American Office! [Click here to check it out!](https://beardytim.github.io/office-quote-game/)
 
 ## Breakdown
 
@@ -11,4 +11,3 @@ Simple who said it game for The American Office!
 
 - [x] Make highscore system
 - [ ] Fix repeated quotes (storing quote ID?)
-

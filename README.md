@@ -9,6 +9,6 @@ Simple who said it game for The American Office!
 
 ## To Do
 
-[x] Make highscore system
-[ ] Fix repeated quotes (storing quote ID?)
+- [x] Make highscore system
+- [ ] Fix repeated quotes (storing quote ID?)
 
